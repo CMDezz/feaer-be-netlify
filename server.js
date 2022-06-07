@@ -1,7 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const { Product } = require("./models/Product/Product");
 
 const mongodbUri = "mongodb://0.0.0.0/feaer";
 const Port = 5000;
