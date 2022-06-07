@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const ProductSchema = new mongoose.Schema({
   Name: { type: String, required: true },
   Price: { type: Number, required: true },
+  SalePrice: { type: Number },
   Desc: { type: String, required: true },
   Sex: { type: mongoose.Schema.Types.ObjectId, ref: "Sex", required: true },
   Category: [
@@ -13,6 +14,9 @@ const ProductSchema = new mongoose.Schema({
   ],
   SizeAndStock: { type: mongoose.Schema.Types.Mixed, required: true },
   Image: [{ type: String, required: true }],
+  Discount: { type: mongoose.Schema.Types.ObjectId, ref: "Discount" },
+  TotalSold: { type: Number },
+  Tag: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
 });
 const Product = mongoose.model("Product", ProductSchema, "Product");
 module.exports = {
