@@ -14,6 +14,7 @@ const ProductSchema = new mongoose.Schema({
   ],
   SizeAndStock: { type: mongoose.Schema.Types.Mixed, required: true },
   Image: [{ type: String, required: true }],
+  ImageDetail: [{ type: String, required: true }],
   Discount: { type: mongoose.Schema.Types.ObjectId, ref: "Discount" },
   TotalSold: { type: Number },
   Tag: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],

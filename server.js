@@ -13,9 +13,9 @@ const app = express();
 
 // Product.find().then((p) => {
 //   p.map((x) => {
-//     x.Image = [
-//       "https://i.imgur.com/J3FtSBY.jpg",
-//       "https://i.imgur.com/2kXx4E5.jpg",
+//     x.ImageDetail = [
+//       "https://i.imgur.com/miLsIPA.jpg",
+//       "https://i.imgur.com/Zl0dVvU.jpg",
 //     ];
 //     x.save();
 //   });

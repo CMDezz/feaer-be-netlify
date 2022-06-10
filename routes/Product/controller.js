@@ -111,3 +111,11 @@ module.exports.getProductsByTag = (req, res, next) => {
     .then((p) => res.status(200).json(p))
     .catch((err) => res.status(500).json(err));
 };
+
+module.exports.getProductById = (req, res, next) => {
+  const { id } = req.query;
+
+  Product.findOne({ _id: id })
+    .then((p) => res.status(200).json(p))
+    .catch((err) => res.status(500).json(err));
+};
