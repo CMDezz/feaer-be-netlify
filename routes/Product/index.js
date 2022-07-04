@@ -10,6 +10,10 @@ router.put("/editProduct", productController.editProduct);
 router.get("/getProductById", productController.getProductById);
 
 router.get("/getNewestProducts", productController.getNewestProducts);
+router.get("/getProductsByCategory", productController.getProductsByCategory);
+
 router.get("/getTopSellerProducts", productController.getTopSellerProducts);
 router.get("/getProductsByTag", productController.getProductsByTag);
+router.get("/getProductsByTagId", productController.getProductsByTagId);
+
 module.exports = router;

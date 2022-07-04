@@ -1,9 +1,9 @@
+const { Discount } = require("../../models/Discount");
 const { Product } = require("./../../models/Product");
 
 module.exports.getProducts = (req, res, next) => {
   Product.find()
     .then((p) => {
-      console.log(p);
       return res.status(200).json(p);
     })
     .catch((err) => res.status(500).json(err));
@@ -56,8 +56,10 @@ module.exports.editProduct = (req, res, next) => {
     Album,
     Sex,
     Image,
+    Category,
     SizeAndStock,
     Tag,
+    Discount,
   } = req.body;
   Product.findById(id)
     .then((p) => {
@@ -67,13 +69,26 @@ module.exports.editProduct = (req, res, next) => {
       if (Desc != null) p.Desc = Desc;
       if (Tag != null) p.Tag = Tag;
       if (Collection != null) p.Collection = Collection;
+      if (Category != null) p.Category = Category;
       if (Album != null) p.Album = Album;
       if (Sex != null) p.Sex = Sex;
       if (Image != null && Image.length > 0) p.Image = Image;
       if (SizeAndStock != null) p.SizeAndStock = SizeAndStock;
+      if (Discount != null && Discount != "") {
+        p.Discount = Discount;
+      }
 
       return p.save();
     })
+    .then((p) => p.populate("Discount"))
+    .then((p) => {
+      if (p.Discount.KindOfDiscount === "donggia")
+        p.SalePrice = p.Discount.Value;
+      if (p.Discount.KindOfDiscount === "giamgia")
+        p.SalePrice = Math.floor((p.Price * (100 - p.Discount.Value)) / 100);
+      return p.save();
+    })
+    // .populate("Discount")
     .then((p) => res.status(200).json(p))
     .catch((err) => res.status(500).json(err));
 };
@@ -90,6 +105,7 @@ module.exports.getNewestProducts = (req, res, next) => {
 //get 8 top sellers products
 module.exports.getTopSellerProducts = (req, res, next) => {
   Product.find()
+    .populate("Discount")
     .sort({ TotalSold: -1 })
     .limit(8)
     .then((p) => res.status(200).json(p))
@@ -99,7 +115,6 @@ module.exports.getTopSellerProducts = (req, res, next) => {
 
 module.exports.getProductsByTag = (req, res, next) => {
   const { tag } = req.query;
-
   Product.find()
     .populate({
       path: "Tag",
@@ -107,7 +122,25 @@ module.exports.getProductsByTag = (req, res, next) => {
         Name: tag,
       },
     })
-    .limit(8)
+    .then((p) => {
+      return p.filter((p) => p.Tag.length > 0);
+    })
+    .then((p) => res.status(200).json(p))
+    .catch((err) => res.status(500).json(err));
+};
+
+module.exports.getProductsByCategory = (req, res, next) => {
+  const { category } = req.query;
+  Product.find()
+    .populate({
+      path: "Category",
+      match: {
+        Name: category,
+      },
+    })
+    .then((p) => {
+      return p.filter((p) => p.Category.length > 0);
+    })
     .then((p) => res.status(200).json(p))
     .catch((err) => res.status(500).json(err));
 };
@@ -116,6 +149,21 @@ module.exports.getProductById = (req, res, next) => {
   const { id } = req.query;
 
   Product.findOne({ _id: id })
+    .then((p) => res.status(200).json(p))
+    .catch((err) => res.status(500).json(err));
+};
+
+module.exports.getProductsByTagId = (req, res, next) => {
+  const { id } = req.query;
+  Product.find()
+    .populate("Discount")
+    .populate({
+      path: "Tag",
+      match: { _id: id },
+    })
+    .then((p) => {
+      return p.filter((p) => p.Tag.length > 0);
+    })
     .then((p) => res.status(200).json(p))
     .catch((err) => res.status(500).json(err));
 };
