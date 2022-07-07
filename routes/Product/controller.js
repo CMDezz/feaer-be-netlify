@@ -83,9 +83,12 @@ module.exports.editProduct = (req, res, next) => {
     .then((p) => p.populate("Discount"))
     .then((p) => {
       if (p.Discount.KindOfDiscount === "donggia")
-        p.SalePrice = p.Discount.Value;
-      if (p.Discount.KindOfDiscount === "giamgia")
-        p.SalePrice = Math.floor((p.Price * (100 - p.Discount.Value)) / 100);
+        p.FinalPrice = p.Discount.Value;
+      else if (p.Discount.KindOfDiscount === "giamgia")
+        p.FinalPrice = Math.floor((p.Price * (100 - p.Discount.Value)) / 100);
+      else {
+        p.FinalPrice = p.Price;
+      }
       return p.save();
     })
     // .populate("Discount")
@@ -164,6 +167,14 @@ module.exports.getProductsByTagId = (req, res, next) => {
     .then((p) => {
       return p.filter((p) => p.Tag.length > 0);
     })
+    .then((p) => res.status(200).json(p))
+    .catch((err) => res.status(500).json(err));
+};
+
+module.exports.getProductsByName = (req, res, next) => {
+  const { keyword } = req.query;
+  Product.find({ Name: { $regex: new RegExp(keyword, "i") } })
+    .populate("Discount")
     .then((p) => res.status(200).json(p))
     .catch((err) => res.status(500).json(err));
 };
