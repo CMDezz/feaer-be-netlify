@@ -12,35 +12,24 @@ mongoose
 
 const app = express();
 
-// Product.find()
-//   .populate("Discount")
-//   .then((products) => {
-//     return products.map((product) => {
-//       // if (product.Discount && product.Discount.KindOfDiscount === "donggia") {
-//       //   product.FinalPrice = p.Discount.Value;
-//       // } else if (
-//       //   product.Discount &&
-//       //   product.Discount.KindOfDiscount === "giamgia"
-//       // ) {
-//       //   product.FinalPrice = Math.floor(
-//       //     (product.Price * (100 - product.Discount.Value)) / 100
-//       //   );
-//       // } else {
-//       //   product.FinalPrice = product.Price;
-//       // }
-
-//       // product.save();
-//       console.log(product);
-//       // if (product.SalePrice && product.SalePrice != "") {
-//       //   console.log("---");
-//       //   console.log(product);
-//       //   // delete product.SalePrice;
-//       // }
-//       return product;
-//     });
-//   })
-//   .catch((err) => console.log(err));
-
+//set top seller tag
+// setTopSellersTag();
+// function setTopSellersTag() {
+//   Product.find()
+//     .populate("Discount")
+//     .limit(20)
+//     .then((ps) =>
+//       ps.map((p) => {
+//         p.Tag.push("62cbb943dd778f26e4877f28");
+//         p.save();
+//         return p;
+//       })
+//     )
+//     .then((ps) => {
+//       console.log(ps);
+//     })
+//     .catch((err) => res.status(500).json(err));
+// }
 app.use(express.json());
 app.use(cors());
 app.use("/api", require("./routes"));

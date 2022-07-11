@@ -16,5 +16,9 @@ router.get("/getTopSellerProducts", productController.getTopSellerProducts);
 router.get("/getProductsByTag", productController.getProductsByTag);
 router.get("/getProductsByTagId", productController.getProductsByTagId);
 router.get("/getProductsByName", productController.getProductsByName);
+router.get(
+  "/getProductsByCollection",
+  productController.getProductsByCollections
+);
 
 module.exports = router;

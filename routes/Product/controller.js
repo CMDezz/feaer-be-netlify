@@ -99,6 +99,7 @@ module.exports.editProduct = (req, res, next) => {
 //get 8 newest products
 module.exports.getNewestProducts = (req, res, next) => {
   Product.find()
+    .populate("Discount Tag")
     .sort({ $natural: -1 })
     .limit(8)
     .then((p) => res.status(200).json(p))
@@ -108,7 +109,7 @@ module.exports.getNewestProducts = (req, res, next) => {
 //get 8 top sellers products
 module.exports.getTopSellerProducts = (req, res, next) => {
   Product.find()
-    .populate("Discount")
+    .populate("Discount Tag")
     .sort({ TotalSold: -1 })
     .limit(8)
     .then((p) => res.status(200).json(p))
@@ -119,6 +120,7 @@ module.exports.getTopSellerProducts = (req, res, next) => {
 module.exports.getProductsByTag = (req, res, next) => {
   const { tag } = req.query;
   Product.find()
+    .populate("Discount")
     .populate({
       path: "Tag",
       match: {
@@ -135,6 +137,7 @@ module.exports.getProductsByTag = (req, res, next) => {
 module.exports.getProductsByCategory = (req, res, next) => {
   const { category } = req.query;
   Product.find()
+    .populate("Tag Discount")
     .populate({
       path: "Category",
       match: {
@@ -174,7 +177,19 @@ module.exports.getProductsByTagId = (req, res, next) => {
 module.exports.getProductsByName = (req, res, next) => {
   const { keyword } = req.query;
   Product.find({ Name: { $regex: new RegExp(keyword, "i") } })
-    .populate("Discount")
+    .populate("Discount Tag")
+    .then((p) => res.status(200).json(p))
+    .catch((err) => res.status(500).json(err));
+};
+
+module.exports.getProductsByCollections = (req, res, next) => {
+  const { id } = req.query;
+  Product.find()
+    .populate("Discount Tag")
+    .populate({
+      path: "Collection",
+      match: { _id: id },
+    })
     .then((p) => res.status(200).json(p))
     .catch((err) => res.status(500).json(err));
 };
