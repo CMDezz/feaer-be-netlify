@@ -11,14 +11,22 @@ router.get("/getProductById", productController.getProductById);
 
 router.get("/getNewestProducts", productController.getNewestProducts);
 router.get("/getProductsByCategory", productController.getProductsByCategory);
+router.get(
+  "/getProductsByCategoryId",
+  productController.getProductsByCategoryId
+);
 
 router.get("/getTopSellerProducts", productController.getTopSellerProducts);
 router.get("/getProductsByTag", productController.getProductsByTag);
 router.get("/getProductsByTagId", productController.getProductsByTagId);
 router.get("/getProductsByName", productController.getProductsByName);
+router.get("/getProductsByDiscount", productController.getProductsByDiscount);
+
 router.get(
   "/getProductsByCollection",
   productController.getProductsByCollections
 );
+
+router.get("/getProductsBySex", productController.getProductsBySex);
 
 module.exports = router;

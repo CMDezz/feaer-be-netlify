@@ -30,6 +30,7 @@ const app = express();
 //     })
 //     .catch((err) => res.status(500).json(err));
 // }
+
 app.use(express.json());
 app.use(cors());
 app.use("/api", require("./routes"));
