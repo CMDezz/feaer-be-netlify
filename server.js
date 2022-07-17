@@ -1,12 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const config = require("./config/config");
+
 const { Product } = require("./models/Product");
 const res = require("express/lib/response");
-const mongodbUri = "mongodb://0.0.0.0/feaer";
-const Port = 5000;
+const Port = process.env.PORT || config.port;
 mongoose
-  .connect(mongodbUri, {})
+  .connect(config.mongodbUri, {})
   .then(() => console.log("Connect to mongodb Successfully!"))
   .catch((err) => console.log(err));
 
