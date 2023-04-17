@@ -17,6 +17,10 @@ switch (process.env.NODE_ENV) {
     port = process.env.STAGING_PORT;
     mongodbUri = process.env.STAGING_MONGODB_URI;
     break;
+  default:
+      port = process.env.STAGING_PORT;
+      mongodbUri = process.env.STAGING_MONGODB_URI;
+      break;
 }
 
 module.exports = {
