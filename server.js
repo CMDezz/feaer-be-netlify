@@ -13,7 +13,7 @@ mongoose
 
 const app = express();
 
-//set top seller tag
+//set top seller ta
 // setTopSellersTag();
 // function setTopSellersTag() {
 //   Product.find()
