@@ -7,7 +7,7 @@ const { Product } = require("./models/Product");
 const res = require("express/lib/response");
 const Port = process.env.PORT || config.port;
 mongoose
-  .connect(config.mongodbUri, {})
+  .connect('mongodb+srv://adminZ:adminZ@cluster0.tmsao.mongodb.net/Feaer', {})
   .then(() => console.log("Connect to mongodb Successfully!"))
   .catch((err) => console.log(err));
 
@@ -35,6 +35,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use("/api", require("./routes"));
-app.listen(Port, () => {
-  console.log(`App is running on Port :${Port}`);
+app.listen(5000, () => {
+  console.log(`App is running on Port :${5000}`);
 });
